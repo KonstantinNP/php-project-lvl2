@@ -1,0 +1,24 @@
+{
+    "name": "puhkn/differ",
+    "description": "a program that detects the difference between two data structures",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Konstantin Pukha",
+            "email": "kosta0683@mail.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "bin": [
+        "bin/gendiff"
+    ],
+    "autoload": {
+        "files": [
+            "src/Differ.php"
+        ]
+    },
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}

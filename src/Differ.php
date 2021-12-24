@@ -3,6 +3,7 @@
 namespace Differ\Differ;
 
 use function Differ\Parsers\parse;
+use function Differ\Stylish\stylish;
 
 function getFilePath(string $path): string
 {
@@ -27,55 +28,86 @@ function loadFile(string $filePath): array
 
 function getStringValue($value)
 {
-    return is_bool($value) ? var_export($value, true) : $value;
+    if (is_bool($value)) {
+        return var_export($value, true);
+    } elseif (is_null($value)) {
+        return strtolower(var_export($value, true));
+    } else {
+        return $value;
+    }
 }
 
-function getDifference(string $filePath1, string $filePath2): string
+function mkNode($name, $marker, $value1, $value2, $children = [])
+{
+    return [
+        'name' => $name,
+        'marker' => $marker,
+        'value1' => $value1,
+        'value2' => $value2,
+        'children' => $children
+    ];
+}
+
+function getName($node)
+{
+    return $node['name'];
+}
+function getValue1($node)
+{
+    return $node['value1'];
+}
+function getValue2($node)
+{
+    return $node['value2'];
+}
+function getMarker($node)
+{
+    return $node['marker'];
+}
+function getChildren($node)
+{
+    return $node['children'];
+}
+
+function repeat($tree1, $tree2): array
+{
+    $tree1 = get_object_vars($tree1);
+    $tree2 = get_object_vars($tree2);
+    $keys1 = array_keys($tree1);
+    $keys2 = array_keys($tree2);
+    $keys = array_unique(array_merge($keys1, $keys2));
+    sort($keys);
+    return array_map(function ($key) use ($tree1, $tree2) {
+        if (array_key_exists($key, $tree1) && array_key_exists($key, $tree2)) {
+            if (is_object($tree1[$key]) && is_object($tree2[$key])) {
+                return mkNode($key, 'unchanged', null, null, repeat($tree1[$key], $tree2[$key]));
+            }
+            if ($tree1[$key] === $tree2[$key]) {
+                return mkNode($key, 'unchanged', getStringValue($tree1[$key]), getStringValue($tree2[$key]));
+            } else {
+                return mkNode($key, 'changed', getStringValue($tree1[$key]), getStringValue($tree2[$key]));
+            }
+        }
+        if (array_key_exists($key, $tree1) && !array_key_exists($key, $tree2)) {
+            return mkNode($key, 'deleted', getStringValue($tree1[$key]), null);
+        }
+        if (!array_key_exists($key, $tree1) && array_key_exists($key, $tree2)) {
+            return mkNode($key, 'added', null, getStringValue($tree2[$key]));
+        }
+    }, $keys);
+}
+
+function genDiff(string $filePath1, string $filePath2): string
 {
     [$type1, $file1] = loadFile($filePath1);
     [$type2, $file2] = loadFile($filePath2);
     $parsedFile1 = parse($type1, $file1);
-    //var_dump($parsedFile1);
-   // print_r($parsedFile1->host);
-    //var_dump(get_object_vars($parsedFile1));
-    $result1 = [];
-    foreach ($parsedFile1 as $key => $value) {
-        $result1[$key] = $value;
-    }
     $parsedFile2 = parse($type2, $file2);
-    $result2 = [];
-    foreach ($parsedFile2 as $key => $value) {
-        $result2[$key] = $value;
-    }
-    $commonFilesData = array_merge($result1, $result2);
-    ksort($commonFilesData);
-    $result = [];
-    $commonKeys = array_keys($commonFilesData);
-    foreach ($commonKeys as $key) {
-        if (array_key_exists($key, $result1) && array_key_exists($key, $result2)) {
-            $value1 = getStringValue($result1[$key]);
-            $value2 = getStringValue($result2[$key]);
-            if ($result1[$key] === $result2[$key]) {
-                $result[] = "    $key: $value1";
-            } else {
-                $result[] = "  - $key: $value1";
-                $result[] = "  + $key: $value2";
-            }
-        }
-        if (array_key_exists($key, $result1) && !array_key_exists($key, $result2)) {
-            $value1 = getStringValue($result1[$key]);
-            $result[] = "  - $key: $value1";
-        }
-        if (!array_key_exists($key, $result1) && array_key_exists($key, $result2)) {
-            $value2 = getStringValue($result2[$key]);
-            $result[] = "  + $key: $value2";
-        }
-    }
-    return implode("\n", $result);
+    $diff = repeat($parsedFile1, $parsedFile2);
+    return stylish($diff);
 }
 
-function genDiff(string $filePath1, string $filePath2): void
+function run(string $filePath1, string $filePath2): void
 {
-    $output = getDifference($filePath1, $filePath2);
-    print_r("{\n$output\n}\n");
+    print_r(genDiff($filePath1, $filePath2));
 }

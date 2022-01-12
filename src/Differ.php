@@ -2,8 +2,8 @@
 
 namespace Differ\Differ;
 
+use function Differ\Formatters\getFormat;
 use function Differ\Parsers\parse;
-use function Differ\Stylish\stylish;
 
 function getFilePath(string $path): string
 {
@@ -97,17 +97,17 @@ function repeat($tree1, $tree2): array
     }, $keys);
 }
 
-function genDiff(string $filePath1, string $filePath2): string
+function genDiff(string $filePath1, string $filePath2, $format): string
 {
     [$type1, $file1] = loadFile($filePath1);
     [$type2, $file2] = loadFile($filePath2);
     $parsedFile1 = parse($type1, $file1);
     $parsedFile2 = parse($type2, $file2);
     $diff = repeat($parsedFile1, $parsedFile2);
-    return stylish($diff);
+    return getFormat($diff, $format);
 }
 
-function run(string $filePath1, string $filePath2): void
+function run(string $filePath1, string $filePath2, string $format = 'stylish'): void
 {
-    print_r(genDiff($filePath1, $filePath2));
+    print_r(genDiff($filePath1, $filePath2, $format));
 }

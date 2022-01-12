@@ -8,3 +8,6 @@
 [![asciicast](https://asciinema.org/a/g9bFgbmkTO9X7p1Oog4K5Ni0q.svg)](https://asciinema.org/a/g9bFgbmkTO9X7p1Oog4K5Ni0q)
 
 [![asciicast](https://asciinema.org/a/ZeH9SapGF5ks4Bxv67CoL5W6p.svg)](https://asciinema.org/a/ZeH9SapGF5ks4Bxv67CoL5W6p)
+
+### Demonstration recursive comparison
+[![asciicast](https://asciinema.org/a/i8fk0oFHDYBIQO9D78rouXpAK.svg)](https://asciinema.org/a/i8fk0oFHDYBIQO9D78rouXpAK)

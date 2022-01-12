@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Stylish;
+namespace Differ\Formatters\Stylish;
 
 use function Funct\Collection\flattenAll;
 use function Differ\Differ\getName;
@@ -24,7 +24,7 @@ function genTree($tree, $deep): string
         return str_repeat(" ", $indent) . "$key: $tree[$key]";
     }, $keys);
     $result = flattenAll($result);
-    return "{\n" . implode("\n", $result) .  "\n" . str_repeat(" ", $indent - 4) . "}";
+    return "{\n" . implode("\n", $result) .  "\n" . str_repeat(" ", $indent - INDENT_STEP) . "}";
 }
 
 function generateString($diffTree, $deep): string
@@ -63,7 +63,7 @@ function generateString($diffTree, $deep): string
     return implode("\n", $result);
 }
 
-function stylish($diffTree): string
+function getStylishFormat($diffTree): string
 {
     $string = generateString($diffTree, 1);
     return "{\n$string\n}\n";

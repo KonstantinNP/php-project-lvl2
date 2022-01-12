@@ -26,6 +26,7 @@ Options:
     
 DOC;
 $args = Docopt::handle($doc);
-[ ,$filePath1, $filePath2] = $argv;
+[ , , $format, $filePath1, $filePath2] = $argv;
+//print_r($argv);
 
-run($filePath1, $filePath2);
+run($filePath1, $filePath2, $format);

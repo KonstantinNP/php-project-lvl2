@@ -11,3 +11,6 @@
 
 ### Demonstration recursive comparison
 [![asciicast](https://asciinema.org/a/i8fk0oFHDYBIQO9D78rouXpAK.svg)](https://asciinema.org/a/i8fk0oFHDYBIQO9D78rouXpAK)
+
+### Demonstration recursive comparison for stylish and plain formats
+[![asciicast](https://asciinema.org/a/fwyzTllztwjewCZemldN92vRw.svg)](https://asciinema.org/a/fwyzTllztwjewCZemldN92vRw)

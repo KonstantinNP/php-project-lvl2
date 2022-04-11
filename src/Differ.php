@@ -97,7 +97,7 @@ function repeat($tree1, $tree2): array
     }, $keys);
 }
 
-function genDiff(string $filePath1, string $filePath2, $format): string
+function genDiff(string $format, string $filePath1, string $filePath2): string
 {
     [$type1, $file1] = loadFile($filePath1);
     [$type2, $file2] = loadFile($filePath2);
@@ -107,7 +107,7 @@ function genDiff(string $filePath1, string $filePath2, $format): string
     return getFormat($diff, $format);
 }
 
-function run(string $filePath1, string $filePath2, string $format = 'stylish'): void
+function run(string $format, string $filePath1, string $filePath2): void
 {
-    print_r(genDiff($filePath1, $filePath2, $format));
+    print_r(genDiff($format, $filePath1, $filePath2));
 }

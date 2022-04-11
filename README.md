@@ -14,3 +14,6 @@
 
 ### Demonstration recursive comparison for stylish and plain formats
 [![asciicast](https://asciinema.org/a/fwyzTllztwjewCZemldN92vRw.svg)](https://asciinema.org/a/fwyzTllztwjewCZemldN92vRw)
+
+### Demonstration recursive comparison for json format
+[![asciicast](https://asciinema.org/a/sMYMvGkVPJHP3X3SCL8ETj7V3.svg)](https://asciinema.org/a/sMYMvGkVPJHP3X3SCL8ETj7V3)

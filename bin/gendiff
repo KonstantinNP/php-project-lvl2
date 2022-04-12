@@ -27,4 +27,4 @@ Options:
 DOC;
 $args = Docopt::handle($doc);
 
-run($args['--format'], $args['<firstFile>'], $args['<secondFile>']);
+run($args['<firstFile>'], $args['<secondFile>'], $args['--format']);

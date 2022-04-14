@@ -38,8 +38,8 @@ function generateString($diffTree, $deep): string
         }
         $value1 = is_object(getValue1($node)) ? genTree(getValue1($node), ++$deep) : getValue1($node);
         $value2 = is_object(getValue2($node)) ? genTree(getValue2($node), ++$deep) : getValue2($node);
-        $value1 = (($value1 === "") || (is_null($value1))) ? ":" : ": $value1";
-        $value2 = (($value2 === "") || (is_null($value2))) ? ":" : ": $value2";
+        $value1 = (($value1 === "") || (is_null($value1))) ? ": " : ": $value1";
+        $value2 = (($value2 === "") || (is_null($value2))) ? ": " : ": $value2";
         switch (getMarker($node)) {
             case "unchanged":
                 $string = "  " . getName($node) . $value1;
@@ -66,5 +66,5 @@ function generateString($diffTree, $deep): string
 function getStylishFormat($diffTree): string
 {
     $string = generateString($diffTree, 1);
-    return "{\n$string\n}\n";
+    return "{\n$string\n}";
 }

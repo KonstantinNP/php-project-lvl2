@@ -11,10 +11,10 @@ use function Differ\Differ\getChildren;
 
 function genString($marker, $propertyArray, $value1, $value2): string
 {
-    if ($value1 != 'false' && $value1 != 'true' && $value1 != 'null' && !is_object($value1)) {
+    if ($value1 != 'false' && $value1 != 'true' && $value1 != 'null' && !is_numeric($value1) && !is_object($value1)) {
         $value1 = "'$value1'";
     }
-    if ($value2 != 'false' && $value2 != 'true' && $value2 != 'null' && !is_object($value2)) {
+    if ($value2 != 'false' && $value2 != 'true' && $value2 != 'null' && !is_numeric($value2) && !is_object($value2)) {
         $value2 = "'$value2'";
     }
     if (is_object($value1)) {
@@ -67,5 +67,5 @@ function getPlainFormat($diffTree): string
     $strings = flattenAll($strings);
     $strings = array_filter($strings, fn($value) => $value != '');
     $result =  implode("\n", $strings);
-    return "$result\n";
+    return "$result";
 }

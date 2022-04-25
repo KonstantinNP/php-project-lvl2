@@ -11,6 +11,8 @@ class DifferTest extends TestCase
     {
         $path1 = __DIR__ . "/fixtures/file1.json";
         $path2 = __DIR__ . "/fixtures/file2.json";
+        $result = file_get_contents(__DIR__ . "/fixtures/resultStylish.txt");
+        $this->assertEquals($result, Differ\genDiff($path1, $path2));
         $format = 'stylish';
         $result = file_get_contents(__DIR__ . "/fixtures/resultStylish.txt");
         $this->assertEquals($result, Differ\genDiff($path1, $path2, $format));
@@ -23,6 +25,8 @@ class DifferTest extends TestCase
 
         $path1 = __DIR__ . "/fixtures/file1.yml";
         $path2 = __DIR__ . "/fixtures/file2.yaml";
+        $result = file_get_contents(__DIR__ . "/fixtures/resultStylish.txt");
+        $this->assertEquals($result, Differ\genDiff($path1, $path2));
         $format = 'stylish';
         $result = file_get_contents(__DIR__ . "/fixtures/resultStylish.txt");
         $this->assertEquals($result, Differ\genDiff($path1, $path2, $format));
